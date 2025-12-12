@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Takako Shimizu Portfolio | Web Designer & Front-end Engineer</title>
+  <meta name="description" content="清水隆子のポートフォリオサイト。丁寧なコミュニケーションと誠実なものづくりで、クライアントの想いをカタチにします。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 16px;
+      line-height: 1.8;
+      color: #333;
+      background-color: #fff;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background-color: rgba(255, 255, 255, 0.95);
+      box-shadow: none;
+      transition: box-shadow 0.3s ease;
+    }
+
+    header.scrolled {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #1A3A5A;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+    }
+
+    nav a {
+      font-weight: 500;
+      color: #555;
+      transition: color 0.3s ease;
+      position: relative;
+      padding-bottom: 2px;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #1A3A5A;
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #1A3A5A;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      width: 25px;
+      height: 3px;
+      background-color: #1A3A5A;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(8px, 8px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
+    }
+
+    section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      padding: 80px 0;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 50px;
+      color: #1A3A5A;
+      position: relative;
+      padding-bottom: 15px;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 3px;
+      background-color: #1A3A5A;
+      border-radius: 2px;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(135deg, #E8EFF5 0%, #f0f5fa 100%);
+      padding-top: 60px;
+      margin-top: 0;
+      padding: 80px 20px;
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero-text h2 {
+      font-size: 0.95rem;
+      color: #1A3A5A;
+      font-weight: 500;
+      margin-bottom: 15px;
+      letter-spacing: 1px;
+    }
+
+    .hero-text h1 {
+      font-size: 2.8rem;
+      color: #1A3A5A;
+      font-weight: 700;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+
+    .hero-text p {
+      font-size: 1.05rem;
+      color: #555;
+      margin-bottom: 35px;
+      line-height: 1.9;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 35px;
+      background-color: #1A3A5A;
+      color: #fff;
+      font-weight: 500;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(26, 58, 90, 0.2);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background-color: #2C4F78;
+      box-shadow: 0 6px 16px rgba(26, 58, 90, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .hero-image img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .work-card {
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .work-card:hover {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      transform: translateY(-6px);
+    }
+
+    .work-card-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .work-card-content {
+      padding: 20px;
+    }
+
+    .work-card h3 {
+      font-size: 1.1rem;
+      color: #1A3A5A;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .work-card-tech {
+      font-size: 0.85rem;
+      color: #1A3A5A;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .skill-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 25px;
+    }
+
+    .skill-card {
+      text-align: center;
+      padding: 30px 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+    }
+
+    .skill-card:hover {
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+      transform: translateY(-4px);
+    }
+
+    .skill-icon {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 15px;
+      background: linear-gradient(135deg, #1A3A5A, #2C4F78);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .skill-card h3 {
+      font-size: 1rem;
+      color: #1A3A5A;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .skill-card p {
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .about {
+      background-color: #E8EFF5;
+    }
+
+    .about-content {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .about-photo {
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 8px 24px rgba(26, 58, 90, 0.2);
+    }
+
+    .about-text h3 {
+      font-size: 1.8rem;
+      color: #1A3A5A;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .about-text p {
+      font-size: 1rem;
+      color: #555;
+      line-height: 2;
+      margin-bottom: 15px;
+    }
+
+    .contact-form {
+      max-width: 700px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 500;
+      color: #1A3A5A;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #1A3A5A;
+      box-shadow: 0 0 0 2px rgba(26, 58, 90, 0.1);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-error {
+      color: #e53e3e;
+      font-size: 0.85rem;
+      margin-top: 5px;
+      display: none;
+    }
+
+    .success-message {
+      background: #38a169;
+      color: #fff;
+      padding: 15px;
+      border-radius: 6px;
+      text-align: center;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    footer {
+      background-color: #1A3A5A;
+      color: #fff;
+      text-align: center;
+      padding: 30px 20px;
+      margin-top: 60px;
+    }
+
+    .scroll-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 45px;
+      height: 45px;
+      background-color: #1A3A5A;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 12px rgba(26, 58, 90, 0.3);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 999;
+    }
+
+    .scroll-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .scroll-to-top:hover {
+      background-color: #2C4F78;
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+      nav ul {
+        gap: 20px;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      nav {
+        position: fixed;
+        top: 60px;
+        right: -100%;
+        width: 100%;
+        height: calc(100vh - 60px);
+        background: rgba(255, 255, 255, 0.98);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: right 0.3s ease;
+      }
+
+      nav.active {
+        right: 0;
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+      }
+
+      nav a {
+        font-size: 1.2rem;
+      }
+
+      .hero-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .hero-text h1 {
+        font-size: 1.9rem;
+      }
+
+      .works-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .skill-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .about-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
+      }
+
+      .about-photo {
+        margin: 0 auto;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-text h1 {
+        font-size: 1.5rem;
+      }
+
+      .skill-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .works-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-form {
+        padding: 20px;
+      }
+
+      .scroll-to-top {
+        width: 40px;
+        height: 40px;
+        bottom: 20px;
+        right: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header id="header">
+    <div class="header-content">
+      <div class="logo">Takako Shimizu Portfolio</div>
+      <nav id="nav">
+        <ul>
+          <li><a href="#works">WORKS</a></li>
+          <li><a href="#skill">SKILL</a></li>
+          <li><a href="#about">ABOUT</a></li>
+          <li><a href="#contact">CONTACT</a></li>
+        </ul>
+      </nav>
+      <button class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h2>Web Designer & Front-end Engineer</h2>
+          <h1>シミズタカコ｜<br>ポートフォリオサイト</h1>
+          <p>丁寧なコミュニケーションと誠実なものづくりで、クライアントの"つたえたい想い"をカタチにします。</p>
+          <a href="#works" class="btn">WORKSを見る</a>
+        </div>
+        <div class="hero-image">
+          <img src="public/mv.png/mv.jpg" alt="Webデザイナー 清水隆子">
+        </div>
+      </div>
+    </section>
+
+    <section id="works">
+      <div class="container">
+        <h2 class="section-title">WORKS</h2>
+        <div class="works-grid">
+
+          <a href="work-corporate.html" class="work-card">
+            <img src="public/works-preview.png/works-preview.png" alt="コーポレートサイト" class="work-card-image">
+            <div class="work-card-content">
+              <h3>コーポレートサイト</h3>
+              <p class="work-card-tech">HTML/CSS/JavaScript/jQuery</p>
+            </div>
+          </a>
+
+          <a href="work-profile.html" class="work-card">
+            <img src="public/works-preview-2.png/works-preview-2.png" alt="プロフィールサイト" class="work-card-image">
+            <div class="work-card-content">
+              <h3>プロフィールサイト</h3>
+              <p class="work-card-tech">HTML/CSS</p>
+            </div>
+          </a>
+
+          <a href="work-beauty.html" class="work-card">
+            <img src="public/works-preview.png/works-preview.png" alt="美容室のHP" class="work-card-image">
+            <div class="work-card-content">
+              <h3>美容室のHP</h3>
+              <p class="work-card-tech">WordPress</p>
+            </div>
+          </a>
+
+          <a href="work-osechi.html" class="work-card">
+            <img src="public/works-preview-2.png/works-preview-2.png" alt="おせち商品バナー" class="work-card-image">
+            <div class="work-card-content">
+              <h3>おせち商品のバナー</h3>
+              <p class="work-card-tech">Photoshop</p>
+            </div>
+          </a>
+
+          <a href="work-reel.html" class="work-card">
+            <img src="public/works-reel.png.png" alt="Instagramリール" class="work-card-image">
+            <div class="work-card-content">
+              <h3>Instagramのリール投稿</h3>
+              <p class="work-card-tech">Canva</p>
+            </div>
+          </a>
+
+          <a href="work-university.html" class="work-card">
+            <img src="public/works-preview.png/works-preview.png" alt="大学のHP" class="work-card-image">
+            <div class="work-card-content">
+              <h3>大学のHP</h3>
+              <p class="work-card-tech">WordPress/PHP</p>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="skill">
+      <div class="container">
+        <h2 class="section-title">SKILL</h2>
+        <div class="skill-grid">
+
+          <div class="skill-card">
+            <div class="skill-icon">H</div>
+            <h3>HTML/CSS</h3>
+            <p>スマートフォンでも表示崩れのないレスポンシブ対応も可能です。</p>
+          </div>
+
+          <div class="skill-card">
+            <div class="skill-icon">W</div>
+            <h3>WordPress</h3>
+            <p>WordPress製の店舗HP・企業HPなどのWebサイトを構築することが可能です。</p>
+          </div>
+
+          <div class="skill-card">
+            <div class="skill-icon">J</div>
+            <h3>JavaScript</h3>
+            <p>お問い合わせフォームや自動スクロールなど動きのあるWebサイトを作る事が可能です。</p>
+          </div>
+
+          <div class="skill-card">
+            <div class="skill-icon">P</div>
+            <h3>Adobe Photoshop</h3>
+            <p>Webサイトに必要不可欠なクリエイティブバナーを作ることが可能です。</p>
+          </div>
+
+          <div class="skill-card">
+            <div class="skill-icon">j</div>
+            <h3>jQuery</h3>
+            <p>Webサイトにフェードイン・フェードアウトなどリッチな動きをつけることが可能です。</p>
+          </div>
+
+          <div class="skill-card">
+            <div class="skill-icon">F</div>
+            <h3>Figma</h3>
+            <p>Webサイトのデザインやワイヤーフレームを作ることが可能です。</p>
+          </div>
+
+          <div class="skill-card">
+            <div class="skill-icon">S</div>
+            <h3>STUDIO</h3>
+            <p>Webサイトやランディングページを作成いたします。</p>
+          </div>
+
+          <div class="skill-card">
+            <div class="skill-icon">C</div>
+            <h3>Canva</h3>
+            <p>SNSのフィードやYoutubeサムネイルを作ることが可能です。</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <div class="container">
+        <h2 class="section-title">ABOUT</h2>
+        <div class="about-content">
+          <img src="public/about-photo.jpg/about-photo.jpg" alt="清水隆子のプロフィール写真" class="about-photo">
+          <div class="about-text">
+            <h3>清水隆子</h3>
+            <p>小学生の子ども2人を育てながら、Webサイト制作のお仕事をしています。</p>
+            <p>以前はテーマパークやアパレルで接客を経験し、その後14年間ブライダル業界で、たくさんのご夫婦の幸せをサポートしてきました。</p>
+            <p>人と話すことが好きで、ご要望をしっかり受け取りながら、一緒に作り上げるスタイルを大切にしています。</p>
+            <p>「こんなサイトがほしい！」という想いを、ぜひお気軽にお聞かせください。ご予算に合わせてご提案いたします。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <h2 class="section-title">CONTACT</h2>
+        <p style="text-align: center; margin-bottom: 40px; color: #555;">お問い合わせは、下記フォームまたはSNSにてお願いいたします。</p>
+
+        <div class="contact-form">
+          <div class="success-message" id="successMessage">
+            送信ありがとうございました。内容を確認のうえ、ご連絡いたします。
+          </div>
+
+          <form id="contactForm">
+            <div class="form-group">
+              <label for="name">お名前 <span style="color: #e53e3e;">*</span></label>
+              <input type="text" id="name" name="name" required>
+              <div class="form-error" id="nameError">お名前を入力してください。</div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">メールアドレス <span style="color: #e53e3e;">*</span></label>
+              <input type="email" id="email" name="email" required>
+              <div class="form-error" id="emailError">正しいメールアドレスを入力してください。</div>
+            </div>
+
+            <div class="form-group">
+              <label for="message">お問い合わせ内容 <span style="color: #e53e3e;">*</span></label>
+              <textarea id="message" name="message" required></textarea>
+              <div class="form-error" id="messageError">お問い合わせ内容を入力してください。</div>
+            </div>
+
+            <button type="submit" class="btn">送信する</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; TAKAKO SHIMIZU</p>
+  </footer>
+
+  <button class="scroll-to-top" id="scrollToTop">↑</button>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const nav = document.getElementById('nav');
+    const navLinks = nav.querySelectorAll('a');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      nav.classList.toggle('active');
+    });
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        nav.classList.remove('active');
+      });
+    });
+
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    const sections = document.querySelectorAll('section');
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+
+    const scrollToTopBtn = document.getElementById('scrollToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        scrollToTopBtn.classList.add('visible');
+      } else {
+        scrollToTopBtn.classList.remove('visible');
+      }
+    });
+
+    scrollToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    const contactForm = document.getElementById('contactForm');
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const messageInput = document.getElementById('message');
+    const successMessage = document.getElementById('successMessage');
+
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      document.getElementById('nameError').style.display = 'none';
+      document.getElementById('emailError').style.display = 'none';
+      document.getElementById('messageError').style.display = 'none';
+
+      let isValid = true;
+
+      if (!nameInput.value.trim()) {
+        document.getElementById('nameError').style.display = 'block';
+        isValid = false;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(emailInput.value.trim())) {
+        document.getElementById('emailError').style.display = 'block';
+        isValid = false;
+      }
+
+      if (!messageInput.value.trim()) {
+        document.getElementById('messageError').style.display = 'block';
+        isValid = false;
+      }
+
+      if (isValid) {
+        successMessage.style.display = 'block';
+        contactForm.reset();
+        setTimeout(() => {
+          successMessage.style.display = 'none';
+        }, 5000);
+      }
+    });
+  </script>
+
+</body>
+</html>

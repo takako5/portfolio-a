@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WORKS｜美容室のHP - Takako Shimizu Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {margin: 0; padding: 0; box-sizing: border-box;}
+    html {scroll-behavior: smooth;}
+    body {font-family: 'Noto Sans JP', sans-serif; font-size: 16px; line-height: 1.8; color: #333; background-color: #fff;}
+    a {text-decoration: none; color: inherit;}
+    .container {max-width: 1200px; margin: 0 auto; padding: 0 20px;}
+    header {position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background-color: rgba(255, 255, 255, 0.95); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);}
+    .header-content {max-width: 1200px; margin: 0 auto; padding: 20px; display: flex; justify-content: space-between; align-items: center;}
+    .logo {font-size: 1.2rem; font-weight: 700; color: #1A3A5A;}
+    nav ul {display: flex; gap: 30px; list-style: none;}
+    nav a {font-weight: 500; color: #555; transition: color 0.3s ease;}
+    nav a:hover {color: #1A3A5A;}
+    .hero-detail {background: linear-gradient(135deg, #E8EFF5 0%, #f0f5fa 100%); padding: 120px 20px 60px; margin-top: 60px;}
+    .hero-detail h1 {font-size: 2.4rem; color: #1A3A5A; margin-bottom: 10px; text-align: center;}
+    .hero-detail-image {text-align: center; margin-top: 40px;}
+    .hero-detail-image img {max-width: 100%; border-radius: 10px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);}
+    main {padding: 60px 0;}
+    section {padding: 50px 0; opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease;}
+    section.visible {opacity: 1; transform: translateY(0);}
+    .section-title {font-size: 1.8rem; color: #1A3A5A; margin-bottom: 25px; font-weight: 600; padding-bottom: 10px; border-bottom: 2px solid #1A3A5A;}
+    section h3 {font-size: 1.2rem; color: #1A3A5A; margin-bottom: 15px; margin-top: 20px; font-weight: 600;}
+    section p {font-size: 1rem; color: #555; line-height: 1.9; margin-bottom: 15px;}
+    .details-grid {display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px;}
+    .detail-box {background: #E8EFF5; padding: 20px; border-radius: 8px;}
+    .detail-box h4 {color: #1A3A5A; font-weight: 600; margin-bottom: 10px;}
+    .detail-box p {margin: 0;}
+    .btn {display: inline-block; padding: 14px 30px; background-color: #1A3A5A; color: #fff; font-weight: 500; border-radius: 30px; transition: all 0.3s ease; margin-top: 30px; box-shadow: 0 4px 12px rgba(26, 58, 90, 0.2);}
+    .btn:hover {background-color: #2C4F78; transform: translateY(-2px);}
+    footer {background-color: #1A3A5A; color: #fff; text-align: center; padding: 30px 20px; margin-top: 60px;}
+    @media (max-width: 768px) {.hero-detail h1 {font-size: 1.8rem;} .details-grid {grid-template-columns: 1fr;} .section-title {font-size: 1.5rem;}}
+    @media (max-width: 480px) {.hero-detail {padding: 100px 20px 40px;} .hero-detail h1 {font-size: 1.4rem;} main {padding: 40px 0;} section {padding: 30px 0;} .section-title {font-size: 1.2rem;}}
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-content">
+      <div class="logo">Takako Shimizu Portfolio</div>
+      <nav>
+        <ul>
+          <li><a href="index.html#works">WORKS</a></li>
+          <li><a href="index.html#skill">SKILL</a></li>
+          <li><a href="index.html#about">ABOUT</a></li>
+          <li><a href="index.html#contact">CONTACT</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="hero-detail">
+    <div class="container">
+      <h1>美容室のHP</h1>
+      <div class="hero-detail-image">
+        <img src="public/works-preview.png/works-preview.png" alt="美容室のHP">
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <div class="container">
+
+      <section class="visible">
+        <h2 class="section-title">概要</h2>
+        <p>美容室の魅力を伝える WordPress ベースのホームページ。スタイリスト紹介、ビフォーアフター写真、メニュー紹介、予約システムなどが統合されたサイトです。</p>
+        <p>女性客層をターゲットとした洗練されたデザインと、直感的なナビゲーションで、顧客獲得と予約増につながるサイト設計。</p>
+      </section>
+
+      <section>
+        <h2 class="section-title">担当</h2>
+        <div class="details-grid">
+          <div class="detail-box">
+            <h4>WordPress テーマカスタマイズ</h4>
+            <p>既存テーマをベースに、美容室ブランドに合わせた色彩・フォント・レイアウトをカスタマイズ。</p>
+          </div>
+          <div class="detail-box">
+            <h4>コンテンツ構築</h4>
+            <p>スタイリスト情報、メニュー、予約導線の設計・実装。クライアントが容易に更新できる構造。</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="section-title">使用技術</h2>
+        <div class="details-grid">
+          <div class="detail-box">
+            <h4>WordPress</h4>
+            <p>WordPress CMS による動的サイト管理。プラグイン活用で予約機能を導入。</p>
+          </div>
+          <div class="detail-box">
+            <h4>レスポンシブ対応</h4>
+            <p>モバイル検索からの顧客流入を重視。全デバイスで見やすいデザイン。</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="section-title">デザインのポイント</h2>
+        <h3>1. 高品質な写真活用</h3>
+        <p>ビフォーアフター写真で施術クオリティをアピール。大きな写真配置で信頼感を醸成。</p>
+
+        <h3>2. 予約導線</h3>
+        <p>各ページから容易に予約画面へアクセスできる設計。顧客の離脱を最小化。</p>
+
+        <h3>3. スタイリスト紹介</h3>
+        <p>スタイリスト個別ページで、得意な技術やスタイルを紹介。顧客の指名につなげる。</p>
+
+        <a href="index.html#works" class="btn">← WORKS一覧へ戻る</a>
+      </section>
+
+    </div>
+  </main>
+
+  <footer><p>&copy; TAKAKO SHIMIZU</p></footer>
+
+  <script>
+    document.querySelectorAll('section').forEach(section => {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+      }, {threshold: 0.1, rootMargin: '0px 0px -50px 0px'});
+      observer.observe(section);
+    });
+  </script>
+
+</body>
+</html>
