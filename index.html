@@ -728,7 +728,7 @@
             送信ありがとうございました。内容を確認のうえ、ご連絡いたします。
           </div>
 
-          <form id="contactForm">
+          <form id="contactForm" action="https://formspree.io/f/movgrvyp" method="POST">
             <div class="form-group">
               <label for="name">お名前 <span style="color: #e53e3e;">*</span></label>
               <input type="text" id="name" name="name" required>
@@ -761,102 +761,137 @@
   <button class="scroll-to-top" id="scrollToTop">↑</button>
 
   <script>
-    const hamburger = document.getElementById('hamburger');
-    const nav = document.getElementById('nav');
-    const navLinks = nav.querySelectorAll('a');
+  const hamburger = document.getElementById('hamburger');
+  const nav = document.getElementById('nav');
+  const navLinks = nav.querySelectorAll('a');
 
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('active');
-      nav.classList.toggle('active');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    nav.classList.toggle('active');
+  });
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      nav.classList.remove('active');
     });
+  });
 
-    navLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        nav.classList.remove('active');
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+
+  const sections = document.querySelectorAll('section');
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, observerOptions);
+
+  sections.forEach(section => {
+    observer.observe(section);
+  });
+
+  const scrollToTopBtn = document.getElementById('scrollToTop');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      scrollToTopBtn.classList.add('visible');
+    } else {
+      scrollToTopBtn.classList.remove('visible');
+    }
+  });
+
+  scrollToTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // ====== ここからお問い合わせフォーム処理 ======
+  const contactForm = document.getElementById('contactForm');
+  const nameInput = document.getElementById('name');
+  const emailInput = document.getElementById('email');
+  const messageInput = document.getElementById('message');
+  const successMessage = document.getElementById('successMessage');
+
+  const nameError = document.getElementById('nameError');
+  const emailError = document.getElementById('emailError');
+  const messageError = document.getElementById('messageError');
+
+  // エラー＆成功メッセージ初期状態
+  successMessage.style.display = 'none';
+  nameError.style.display = 'none';
+  emailError.style.display = 'none';
+  messageError.style.display = 'none';
+
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // エラーのリセット
+    nameError.style.display = 'none';
+    emailError.style.display = 'none';
+    messageError.style.display = 'none';
+
+    let isValid = true;
+
+    // 名前チェック
+    if (!nameInput.value.trim()) {
+      nameError.style.display = 'block';
+      isValid = false;
+    }
+
+    // メール形式チェック
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailInput.value.trim())) {
+      emailError.style.display = 'block';
+      isValid = false;
+    }
+
+    // メッセージチェック
+    if (!messageInput.value.trim()) {
+      messageError.style.display = 'block';
+      isValid = false;
+    }
+
+    if (!isValid) {
+      return;
+    }
+
+    // Formspreeに送信
+    const formData = new FormData(contactForm);
+
+    try {
+      const response = await fetch(contactForm.action, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
       });
-    });
 
-    const header = document.getElementById('header');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 50) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
-      }
-    });
-
-    const sections = document.querySelectorAll('section');
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, observerOptions);
-
-    sections.forEach(section => {
-      observer.observe(section);
-    });
-
-    const scrollToTopBtn = document.getElementById('scrollToTop');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
-        scrollToTopBtn.classList.add('visible');
-      } else {
-        scrollToTopBtn.classList.remove('visible');
-      }
-    });
-
-    scrollToTopBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    const contactForm = document.getElementById('contactForm');
-    const nameInput = document.getElementById('name');
-    const emailInput = document.getElementById('email');
-    const messageInput = document.getElementById('message');
-    const successMessage = document.getElementById('successMessage');
-
-    contactForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      document.getElementById('nameError').style.display = 'none';
-      document.getElementById('emailError').style.display = 'none';
-      document.getElementById('messageError').style.display = 'none';
-
-      let isValid = true;
-
-      if (!nameInput.value.trim()) {
-        document.getElementById('nameError').style.display = 'block';
-        isValid = false;
-      }
-
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(emailInput.value.trim())) {
-        document.getElementById('emailError').style.display = 'block';
-        isValid = false;
-      }
-
-      if (!messageInput.value.trim()) {
-        document.getElementById('messageError').style.display = 'block';
-        isValid = false;
-      }
-
-      if (isValid) {
-        successMessage.style.display = 'block';
+      if (response.ok) {
         contactForm.reset();
+        successMessage.style.display = 'block';
         setTimeout(() => {
           successMessage.style.display = 'none';
         }, 5000);
+      } else {
+        alert('送信に失敗しました。お手数ですが、時間をおいて再度お試しください。');
       }
-    });
-  </script>
+    } catch (error) {
+      alert('通信エラーが発生しました。ネットワーク環境をご確認ください。');
+    }
+  });
+</script>
+
 
 </body>
 </html>
