@@ -831,9 +831,6 @@
   scrollToTopBtn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
-
-   <!-- ここまではハンバーガーやスクロールなど既存のJSでOK -->
-
   // ====== ここからお問い合わせフォーム処理 ======
   const contactForm    = document.getElementById('contactForm');
   const nameInput      = document.getElementById('name');
@@ -913,6 +910,7 @@
     // フラグを戻す
     submitted = false;
   });
+  </script>
 
 
 
