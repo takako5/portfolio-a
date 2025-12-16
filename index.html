@@ -718,8 +718,12 @@
       </div>
     </section>
 
+            <section class="contact" id="contact">
+      <div class="container">
         <h2 class="section-title">CONTACT</h2>
-        <p style="text-align: center; margin-bottom: 40px; color: #555;">お問い合わせは、下記フォームまたはSNSにてお願いいたします。</p>
+        <p style="text-align: center; margin-bottom: 40px; color: #555;">
+          お問い合わせは、下記フォームまたはSNSにてお願いいたします。
+        </p>
 
         <div class="contact-form">
           <div class="success-message" id="successMessage">
@@ -727,12 +731,11 @@
           </div>
 
           <form
-  id="contactForm"
-  action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSe_Ue93o4as6vjvgYme01NKwrBiEsxzj8aw0uNrNgLFF9F2Iw/formResponse"
-  method="POST"
-  target="hidden_iframe"
->
-            <iframe name="hidden_iframe" style="display:none;"></iframe>
+            id="contactForm"
+            action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSe_Ue93o4as6vjvgYme01NKwrBiEsxzj8aw0uNrNgLFF9F2Iw/formResponse"
+            method="POST"
+            target="hidden_iframe"
+          >
             <div class="form-group">
               <label for="name">お名前 <span style="color: #e53e3e;">*</span></label>
               <input type="text" id="name" name="entry.1720887342" required>
@@ -753,9 +756,17 @@
 
             <button type="submit" class="btn">送信する</button>
           </form>
+
+          <!-- ★ フォームの「外」に置くのがポイント -->
+          <iframe
+            name="hidden_iframe"
+            id="hidden_iframe"
+            style="display:none;"
+          ></iframe>
         </div>
       </div>
     </section>
+
   </main>
 
   <footer>
@@ -821,16 +832,23 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
+   <!-- ここまではハンバーガーやスクロールなど既存のJSでOK -->
+
   // ====== ここからお問い合わせフォーム処理 ======
-  const contactForm   = document.getElementById('contactForm');
-  const nameInput     = document.getElementById('name');
-  const emailInput    = document.getElementById('email');
-  const messageInput  = document.getElementById('message');
+  const contactForm    = document.getElementById('contactForm');
+  const nameInput      = document.getElementById('name');
+  const emailInput     = document.getElementById('email');
+  const messageInput   = document.getElementById('message');
   const successMessage = document.getElementById('successMessage');
 
-  const nameError     = document.getElementById('nameError');
-  const emailError    = document.getElementById('emailError');
-  const messageError  = document.getElementById('messageError');
+  const nameError      = document.getElementById('nameError');
+  const emailError     = document.getElementById('emailError');
+  const messageError   = document.getElementById('messageError');
+
+  const hiddenIframe   = document.getElementById('hidden_iframe');
+
+  // 送信フラグ（iframe の onload が「送信完了」かどうか判定するため）
+  let submitted = false;
 
   // 初期表示
   successMessage.style.display = 'none';
@@ -838,8 +856,9 @@
   emailError.style.display = 'none';
   messageError.style.display = 'none';
 
+  // バリデーション＋ Google 送信
   contactForm.addEventListener('submit', (e) => {
-    // エラーのリセット
+    // まずエラーを消す
     nameError.style.display = 'none';
     emailError.style.display = 'none';
     messageError.style.display = 'none';
@@ -865,26 +884,36 @@
       isValid = false;
     }
 
-    // 入力 NG のときは送信しない
+    // 入力 NG のときは送信させない
     if (!isValid) {
       e.preventDefault();
       return;
     }
 
-    // ここから先は「通常のフォーム送信」に任せる（Googleへ送信）
-    // → target="hidden_iframe" により画面遷移は起こらない
+    // ここでは e.preventDefault() しない → 通常のフォーム送信で
+    // target="hidden_iframe" に飛ばす
+    submitted = true;
+  });
 
-    // サンクスメッセージ表示
+  // iframe に Google フォームの完了画面が読み込まれたら呼ばれる
+  hiddenIframe.addEventListener('load', () => {
+    if (!submitted) return; // ページ読み込み時の onload などは無視
+
+    // サクセスメッセージ表示
     successMessage.style.display = 'block';
 
-    // 数秒後にページの上部（ヒーロー）へ戻す例
-    setTimeout(() => {
-      window.location.href = '#hero';  // もしくは '/' 相当のURL
-    }, 3000);
-  });
-</script>
+    // 入力クリア
+    contactForm.reset();
 
-</script>
+    // 数秒後にトップへ戻す（お好みで）
+    setTimeout(() => {
+      window.location.hash = '#hero';
+    }, 3000);
+
+    // フラグを戻す
+    submitted = false;
+  });
+
 
 
 </body>
