@@ -726,10 +726,16 @@
             送信ありがとうございました。内容を確認のうえ、ご連絡いたします。
           </div>
 
-          <form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSe_Ue93o4as6vjvgYme01NKwrBiEsxzj8aw0uNrNgLFF9F2Iw/formResponse">
+          <form
+  id="contactForm"
+  action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSe_Ue93o4as6vjvgYme01NKwrBiEsxzj8aw0uNrNgLFF9F2Iw/formResponse"
+  method="POST"
+  target="hidden_iframe"
+>
+            <iframe name="hidden_iframe" style="display:none;"></iframe>
             <div class="form-group">
               <label for="name">お名前 <span style="color: #e53e3e;">*</span></label>
-              <input type="text" id="name" name="entry.1720887342"" required>
+              <input type="text" id="name" name="entry.1720887342" required>
               <div class="form-error" id="nameError">お名前を入力してください。</div>
             </div>
 
@@ -816,25 +822,23 @@
   });
 
   // ====== ここからお問い合わせフォーム処理 ======
-  const contactForm = document.getElementById('contactForm');
-  const nameInput = document.getElementById('name');
-  const emailInput = document.getElementById('email');
-  const messageInput = document.getElementById('message');
+  const contactForm   = document.getElementById('contactForm');
+  const nameInput     = document.getElementById('name');
+  const emailInput    = document.getElementById('email');
+  const messageInput  = document.getElementById('message');
   const successMessage = document.getElementById('successMessage');
 
-  const nameError = document.getElementById('nameError');
-  const emailError = document.getElementById('emailError');
-  const messageError = document.getElementById('messageError');
+  const nameError     = document.getElementById('nameError');
+  const emailError    = document.getElementById('emailError');
+  const messageError  = document.getElementById('messageError');
 
-  // エラー＆成功メッセージ初期状態
+  // 初期表示
   successMessage.style.display = 'none';
   nameError.style.display = 'none';
   emailError.style.display = 'none';
   messageError.style.display = 'none';
 
-  contactForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
+  contactForm.addEventListener('submit', (e) => {
     // エラーのリセット
     nameError.style.display = 'none';
     emailError.style.display = 'none';
@@ -861,33 +865,25 @@
       isValid = false;
     }
 
+    // 入力 NG のときは送信しない
     if (!isValid) {
+      e.preventDefault();
       return;
     }
 
-    // Formspreeに送信
-    const formData = new FormData(contactForm);
+    // ここから先は「通常のフォーム送信」に任せる（Googleへ送信）
+    // → target="hidden_iframe" により画面遷移は起こらない
 
-    try {
-      const response = await fetch(contactForm.action, {
-        method: 'POST',
-        body: formData,
-        headers: { 'Accept': 'application/json' }
-      });
+    // サンクスメッセージ表示
+    successMessage.style.display = 'block';
 
-      if (response.ok) {
-        contactForm.reset();
-        successMessage.style.display = 'block';
-        setTimeout(() => {
-          successMessage.style.display = 'none';
-        }, 5000);
-      } else {
-        alert('送信に失敗しました。お手数ですが、時間をおいて再度お試しください。');
-      }
-    } catch (error) {
-      alert('通信エラーが発生しました。ネットワーク環境をご確認ください。');
-    }
+    // 数秒後にページの上部（ヒーロー）へ戻す例
+    setTimeout(() => {
+      window.location.href = '#hero';  // もしくは '/' 相当のURL
+    }, 3000);
   });
+</script>
+
 </script>
 
 
