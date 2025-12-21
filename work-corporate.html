@@ -264,25 +264,24 @@
   </style>
 </head>
 <body>
-
   <header id="header">
-    <div class="header-content">
-      <div class="logo">Takako Shimizu Portfolio</div>
-      <nav id="nav">
-        <ul>
-          <li><a href="#works">WORKS</a></li>
-          <li><a href="#skill">SKILL</a></li>
-          <li><a href="#about">ABOUT</a></li>
-          <li><a href="#contact">CONTACT</a></li>
-        </ul>
-      </nav>
-      <button class="hamburger" id="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-  </header>
+  <div class="header-content">
+    <div class="logo"><a href="./">Takako Shimizu Portfolio</a></div>
+
+    <nav id="nav">
+      <ul>
+        <li><a href="./#works">WORKS</a></li>
+        <li><a href="./#skill">SKILL</a></li>
+        <li><a href="./#about">ABOUT</a></li>
+        <li><a href="./#contact">CONTACT</a></li>
+      </ul>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="メニューを開閉" aria-controls="nav" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
 
   <div class="hero-detail">
     <div class="container">
@@ -356,24 +355,27 @@
   </footer>
 
   <script>
-    const sections = document.querySelectorAll('section');
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
+  const hamburger = document.getElementById('hamburger');
+  const nav = document.getElementById('nav');
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, observerOptions);
+  if (hamburger && nav) {
+    const navLinks = nav.querySelectorAll('a');
 
-    sections.forEach(section => {
-      observer.observe(section);
+    hamburger.addEventListener('click', () => {
+      const isOpen = nav.classList.toggle('active');
+      hamburger.classList.toggle('active', isOpen);
+      hamburger.setAttribute('aria-expanded', String(isOpen));
     });
-  </script>
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('active');
+        hamburger.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+</script>
 
 </body>
 </html>
