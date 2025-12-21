@@ -385,24 +385,36 @@
     <p>&copy; TAKAKO SHIMIZU</p>
   </footer>
 
-  <script>
-  const hamburger = document.getElementById('hamburger');
-  const nav = document.getElementById('nav');
+<script>
+  document.querySelectorAll("main section").forEach((section) => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("visible");
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+    );
+    observer.observe(section);
+  });
+
+  const hamburger = document.getElementById("hamburger");
+  const nav = document.getElementById("nav");
 
   if (hamburger && nav) {
-    const navLinks = nav.querySelectorAll('a');
+    const navLinks = nav.querySelectorAll("a");
 
-    hamburger.addEventListener('click', () => {
-      const isOpen = nav.classList.toggle('active');
-      hamburger.classList.toggle('active', isOpen);
-      hamburger.setAttribute('aria-expanded', String(isOpen));
+    hamburger.addEventListener("click", () => {
+      const isOpen = nav.classList.toggle("active");
+      hamburger.classList.toggle("active", isOpen);
+      hamburger.setAttribute("aria-expanded", String(isOpen));
     });
 
-    navLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        nav.classList.remove('active');
-        hamburger.classList.remove('active');
-        hamburger.setAttribute('aria-expanded', 'false');
+    navLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        nav.classList.remove("active");
+        hamburger.classList.remove("active");
+        hamburger.setAttribute("aria-expanded", "false");
       });
     });
   }
